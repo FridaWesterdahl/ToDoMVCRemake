@@ -1,6 +1,6 @@
-#Skriv er egen version av den kända exempelappen TodoMVC med HTML, CSS och JavaScript.
+# Skriv er egen version av den kända exempelappen TodoMVC med HTML, CSS och JavaScript.
 
-##Funktionalitet
+## Funktionalitet
 Er app ska ha samma funktionalitet som exemplet, inklusive följande:
 
 Lägga till anteckningar.
@@ -15,7 +15,7 @@ Ni ska dock inte implementera följande funktionalitet:
 URL-hantering (att knapparna "All", "Active" och "Completed" ändrar på URL:en).
 Att anteckningar kan redigeras genom att dubbelklicka på dem.
 Automatiskt spara anteckningarna så att de finns kvar även när sidan laddas om.
-##Utseende
+## Utseende
 Utseendet ska också vara samma som exemplet, förutom följande:
 
 Er design ska, till skillnad från exemplet, vara responsiv. Ni bedömer själva hur detta bäst görs.
@@ -27,7 +27,7 @@ För nedåtpilen till vänster om textfältet räcker det med följande emoji: �
 Ni behöver inte återskapa "pappershög"-effekten under listan över anteckningar. Skuggan runt huvudinnehållet ska dock finnas med.
 Till skillnad från tidigare inlämningsuppgifter behöver ni här återskapa samma design som i exemplet, inklusive typsnitt, marginaler, textstorlekar, etc. Det är dock tillåtet att välja andra färger och/eller bakgrundsgrafik, om ni vill göra den till "er egen".
 
-##Tester
+## Tester
 Ni ska skriva följande tre GUI-tester med Selenium:
 
 Lägg till en anteckning och bekräfta att den visas på sidan.
@@ -38,5 +38,5 @@ Den kod som ni lämnar in ska vara er egen, men det är OK att inspektera källk
 Denna uppgift har ingenting med designmönstret MVC (Model-View-Controller) att göra, trots namnet TodoMVC. Ni behöver inte och bör inte implementera detta designmönster i er lösning. (Med andra ord: glömt helt bort begreppet MVC i det här sammanhanget.)
 Skriv all er HTML, CSS och JavaScript själva, utan ramverk och bibliotek.
 I övrigt gäller samma generella riktlinjer som tidigare kring exempelvis kodformatering och semantisk HTML.
-##Samarbete
+## Samarbete
 Denna inlämningsuppgift ska utföras och lämnas in i par.
