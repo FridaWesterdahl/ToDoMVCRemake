@@ -1,58 +1,45 @@
-let note = document.querySelector("#input");
-let noteList = document.querySelector("todo-list");
 let newNote;
 let itemsCount = 0;
-let doneItems = 0;
-let undoneItems = [];
 let notes = [];
-let done = [];
+
 
 document.addEventListener("submit", (event) => {
     event.preventDefault();
-    console.log("input:", input.value);
 
     itemsCount++;
-
-    console.log("un")
     console.log("item count:", itemsCount)
 
     notes.push(input.value);
-    console.log("note array:", notes);
+    console.log("notes[]:", notes);
 
-
-    if (itemsCount === 1) {
-        addNote();
-        document.querySelector("#input").value = "";
-        activateFilter();
-    }
-    else {
-        addNote();
-        document.querySelector("#input").value = "";
-    }
-    
-  });
-
-
-function addNote() {
-    let ul = document.querySelector("#todo-list");
+    let ul = document.querySelector(".todo-list");
     let li = document.createElement("li");
     ul.append(li);
 
-    let doneBtn = document.createElement("button");
-    doneBtn.className = "done";
-    doneBtn.textContent = "✅";
-    li.append(doneBtn);
-    doneBtn.onclick = () => {
-        markDone();
-    }
+    let checkbox = document.createElement("INPUT");
+    checkbox.setAttribute("type", "checkbox");
+    li.append(checkbox);
+    console.log("input value:", input.value);
+    checkbox.onclick = () => {
+        if (checkbox.checked) {
+            itemsCount--;
+            note.style.color = "grey";
+            note.style.textDecoration = "line-through";
+            console.log("itemsCount when checked:", itemsCount);
+            note.id = "completed";
+        }
+        else {
+            itemsCount++;
+            console.log("itemsCount when unchecked:", itemsCount);
+            note.style.color = "black";
+            note.style.textDecoration = "none";
+        }
+    };
 
-    let createNote = document.createElement("textbox");
-    createNote.className = "text";
-    li.append(createNote);
-    newNote = note.value;
-    console.log("Array note:", this.arrayNote);
-    createNote.append(newNote);
-    console.log(newNote);
+    let note = document.createElement("p");
+    note.textContent = input.value;
+    li.append(note);
+    note.id = "active";
 
     let removeBtn = document.createElement("button");
     removeBtn.className = "remove";
@@ -61,7 +48,16 @@ function addNote() {
     removeBtn.onclick = () => {
         li.remove();
         itemsCount--;
+        console.log("itemsCount when removed:", itemsCount);
     }  
+    
+
+    document.querySelector("#input").value = "";
+});
+
+
+function addNote() {
+    
 }
 
 function activateFilter() {
@@ -107,8 +103,6 @@ function activateFilter() {
 
 }
 
-
-
 function showAllNotes() {
     // Show all notes in filter
 }
@@ -122,8 +116,7 @@ function showCompleted() {
 }
 
 function markDone() {
-    done.push(this.arrayNote);
-    console.log("done array:", done);
+    console.log("markDone");
 
-    // let btn = document.querySelector("text").style.textDecorationLine;
+
 }
