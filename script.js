@@ -4,11 +4,24 @@ let notes = [];
 let checkboxCount = 0;
 
 
+ function filters() {
+    let filter = document.querySelector("#filter");
+        if (itemsCount >= 1) {
+            filter.style.visibility = "visible";
+            console.log("filter itemCount:", itemsCount)
+        }
+        else {
+            filter.style.visibility = "hidden";
+        }
+
+ };
+
 document.addEventListener("submit", (event) => {
     event.preventDefault();
 
     itemsCount++;
-    console.log("item count:", itemsCount);
+    console.log("item count:", itemsCount);      
+    filters();
     itemsLeft();
     clearAllBtn();
 
@@ -31,7 +44,7 @@ document.addEventListener("submit", (event) => {
             itemsLeft();
             note.style.color = "grey";
             note.style.textDecoration = "line-through";
-            console.log("itemsCount when checked:", itemsCount);
+            console.log("itemsCount:", itemsCount);
             note.className = "completed";
             clearAllBtn();
         }
@@ -40,21 +53,12 @@ document.addEventListener("submit", (event) => {
             checkboxCount--;
             console.log("checkboxCount:", checkboxCount);
             itemsLeft();
-            console.log("itemsCount when unchecked:", itemsCount);
+            console.log("itemsCount:", itemsCount);
             note.style.color = "black";
             note.style.textDecoration = "none";
             clearAllBtn();
         }
-    };
-
-    function clearAllBtn() {
-        const clearAll = document.querySelector(".clear-all");
-        if (checkboxCount < 1) {
-            clearAll.style.visibility = "hidden";     
-        }
-        else {
-            clearAll.style.visibility = "visible"; 
-        }
+        filters();
     };
 
     let note = document.createElement("p");
@@ -68,19 +72,32 @@ document.addEventListener("submit", (event) => {
     li.append(removeBtn);
     removeBtn.onclick = () => {
         li.remove();
-
+        filters();
+        itemsLeft();
+        clearAllBtn();
         if (!checkbox.checked) {
             itemsCount--;
             itemsLeft();
-            console.log("itemsCount when removed:", itemsCount);
+            filters();
+            console.log("itemsCount:", itemsCount);
         } 
     };  
+
+    function clearAllBtn() {
+        const clearAll = document.querySelector(".clear-all");
+        if (checkboxCount < 1) {
+            clearAll.style.visibility = "hidden";     
+        }
+        else {
+            clearAll.style.visibility = "visible"; 
+        }
+    };
 
     document.querySelector("#input").value = "";
 });
 
 function itemsLeft() { 
-    if (itemsCount === 1) {
+    if (itemsCount <= 1) {
         document.getElementById("p").innerHTML = itemsCount + " item left";
     }
     if (itemsCount > 1) {
@@ -90,22 +107,20 @@ function itemsLeft() {
 
     const allNotes = document.querySelector(".all-notes");
     allNotes.onclick = () => {
-
+        console.log("onclick all ;)")
     };
 
     const active = document.querySelector(".active");
     active.onclick = () => {
-
+        console.log("onclick active ;)") 
     };
 
     const completed = document.querySelector(".completed");
     completed.onclick = () => {
-
+        console.log("onclick completed ;)")
     };
-
-    
 
     const clearAll = document.querySelector(".clear-all");
         clearAll.onclick = () => {
-        console.log("onclick clear :", checkboxCount)
+        console.log("onclick clear ;)")
     };

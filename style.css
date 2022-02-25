@@ -88,6 +88,7 @@ form #input[type=text]{
 
 #filter {
     font-size: 14px;
+    visibility: hidden;
 }
 
 
