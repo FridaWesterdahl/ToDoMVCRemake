@@ -1,99 +1,221 @@
 * {
-    box-sizing: border-box;
-    margin: 0px;
-    padding: 0px;
     /* outline: 1px solid red; */
 }
-html {
-    display: block;
-}
-
 body {
-    background-color: rgb(199 226 188 / 87%);
-    font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 24px;
-    min-width: 230px;
-    max-width: 550px;
-    margin: auto;
-}
-
-h1 {
-    width: 100%;
-    text-align: center;
-    color: black;
-    opacity: 45%;
-    font-size: 100px;
-}
-
-form #markAll{    
-    padding: 10px;
-    float: left;
-    width: 18%;
-    height: 50px;
-    max-width: 40px;
-    cursor: pointer;
-} 
-form #markAll:checked {
-    background-color: green;;
-}
-
-form #input[type=text]{
-    background-color: #fbfbfb;
-    padding: 10px;
-    width: 92%;
-    height: 50px;
-    outline: none;
-    font-style: italic;
-    border: none;
-    font-size: 24px;
-}
-
-.todo-list li {
-    list-style: none;
-    padding: 5px;
     display: grid;
-    grid-template-areas: "a b c d e f g h i j k l m n o";
-}
-.done {grid-area: a;}
-.text {grid-area: b c d e f g h i j k l m n;}
-.remove {grid-area: o;}
+    grid-template-areas: 
+    "header"
+    "main"
+    "footer";
+    max-width: 550px;
+    margin-left: auto;
+    margin-right: auto;
 
-.done {
-    width: 30px;
-    border: none;
-    margin-left: 1px;
-    opacity: 5%;
+    background: rgb(199 226 188 / 87%);
+    color: #4d4d4d;
+    font: 14px 'HelveticaNeue-Light', Helvetica, Arial, sans-serif;
+}
+
+header {
+    grid-area: header;
+    justify-self: center;
+}
+
+header h1 {
+    color: rgba(76, 121, 57, 0.596);
+    font-size: 100px;
+    font-weight: 100;
+    margin-bottom: 0;
+}
+
+.hidden {
+    display: none !important;
+}
+
+:focus {
+    outline: 0;
+}
+
+button {
+    background: transparent;
+    border: solid transparent;
+    border-radius: 3px;
+}
+
+main {
+    grid-area: main;
+    display: grid;
+    grid-template-areas: 
+    "search"
+    "list"
+    "status";
+
+    background: white;
+    margin: 0 0 40px 0;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2), 0 25px 50px 0 rgba(0,0,0,0.1);
+}
+
+main #todo-top {
+    grid-area: search;
+    display: grid;
+    grid-template-columns: 50px auto;
+    grid-template-areas: 
+    "checkbox searchbar";
+    border-bottom: 1px solid #e6e6e6;
+    box-shadow: inset 0 -2px 1px rgb(0 0 0 / 3%);
+}
+
+main #todo-top .toggle-all {
+    opacity: 0;
+    height: 40px;
+    width: 40px;
+    grid-area: checkbox;
+    align-self: center;
     cursor: pointer;
 }
-.done:hover {
-    opacity: 80%;
+
+main #todo-top label {
+    line-height: 1.2;
+    grid-row-start: 1;
+    grid-column-start: 1;
 }
-.remove {
-    width: 25px;
-    float: right;
+
+main #todo-top .toggle-all + label {
+    background-image: url(images/circle.svg);
+    background-repeat: no-repeat;
+    background-position: center left;
+}
+
+main #todo-top .toggle-all:checked + label {
+    background-image: url(images/circle_tick.svg);
+}
+
+main #todo-top .input-bar {
+    background: rgba(0, 0, 0, 0.003);
+    text-shadow: 0 1px 0 rgb(255 255 255 / 50%);
+    justify-self: stretch;
+    grid-area: searchbar;
+}
+
+main #todo-top .input-bar #input {
+    position: relative;
+    width: 300px;
+    height: 33px;
     border: none;
-    margin-left: 1px;
-    opacity: 0%;
+    font-size: 24px;
+    font-style: italic;
+    text-align: left;
+    padding: 16px;
+}
+
+main #todo-top .input-bar #input::placeholder {
+    color: #d9d9d9;
+}
+
+main #todo-list {
+    grid-area: list;
+    list-style: none;
+    padding: 0%;
+    margin: 0%;
+}
+
+main #todo-list li {
+    display: grid;
+    grid-template-columns: 50px auto 50px;
+    grid-template-areas: 
+    "checkbox label delete";
+    font-size: 24px;
+    border-bottom: 1px solid #ededed;
+}
+
+
+main #todo-list li .toggle {
+    opacity: 0;
+    height: 40px;
+    width: 40px;
+    grid-area: checkbox;
     cursor: pointer;
 }
 
-.remove:hover {
-    opacity: 100%;
-}
-
-.frame {
-    box-shadow: 1px 1px 4px 0px rgb(121, 120, 120);
-    background-color: #fbfbfb;
-} 
-
-#filter {
-    font-size: 14px;
-    visibility: hidden;
+main #todo-list li .remove-button {
+    justify-self: center;
+    margin: 0;
+    padding: 0;
+    grid-area: delete;
+    cursor: pointer;
 }
 
 
+main #todo-list li label {
+    word-break: break-all;
+    padding: 15px 15px 15px 60px;
+    line-height: 1.2;
+    grid-row: 1;
+    grid-column: span 3 / -1;
+}
+
+main #todo-list li .toggle + label {
+    background-image: url(images/circle.svg);
+    background-repeat: no-repeat;
+    background-position: center left;
+}
+
+main #todo-list li .toggle:checked + label {
+    background-image: url(images/circle_tick.svg);
+}
+
+main #todo-list li.completed label {
+    color: #d9d9d9;
+    text-decoration: line-through;
+}
+
+main #status-field {
+    grid-area: status;
+    display: grid;
+    align-items: center;
+    grid-template-columns: 20% 55% 25%;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+main #status-field #filter-button {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    padding: 0%;
+    justify-self: center;
+}
+
+main #status-field #filter-button li {
+    padding: 2px;
+    display: inline;
+}
+main #status-field #filter-button li button{
+    cursor: pointer;
+}
+
+main #status-field #filter-button li button:hover {
+    border: solid rgba(47, 175, 53, 0.1);
+}
+
+main #status-field #filter-button li button.active {
+    border: solid rgba(47, 175, 64, 0.15);
+}
+
+main #status-field #clear-completed {
+    justify-self: center;
+    align-self: center;
+}
+
+main #status-field #clear-completed:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
 
 footer, footer a {
+    grid-area: footer;
+    justify-self: center;
+    font-size: 14px;
     margin-top: 100px;
     text-align: center;
     color:white;
