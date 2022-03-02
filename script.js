@@ -1,229 +1,215 @@
-let activeTasks = 0;
-let completedTasks = 0;
-let filterStatus = "all";
+let activeNotes = 0;
+let checkboxCount = 0;
+let isChecked = false;
 
 start();
 
 function start() {
-    Input();
-    setupTemplate();
-    setupToggleAll();
-    setupClearCompleted();
-    setupShowAllButton();
-    setupShowActiveButton();
-    setupCompletedButton();
+    filters();
+    addNote();
+    filterAll();
+    filterActive();
+    filterCompleted();
 }
 
-function Input() {
-    let inputBar = document.querySelector(".input-bar");
-    let input = inputBar.querySelector("#input");
-
-    inputBar.onsubmit = event => {
-        console.log("input:", input.value);
-        event.preventDefault();
-        addNote(input.value);
-        updateButtons();
-        document.querySelector(".toggle-all").checked = false;
-        input.value = "";
-    };
-}
-
-function addNote(text) {
-    let li = template.content.firstElementChild.cloneNode(true);  
-    let label = li.querySelector(".todo-text");
-    label.textContent = text;
-
-    let doneButton = li.querySelector(".toggle");
-    let removeButton = li.querySelector(".remove-button");
-    removeButton.onclick = () => {
-        if (doneButton.checked) {
-            completedTasks--;
+function filters() {
+    let filter = document.querySelector("#sort");
+        if (activeNotes >= 1 || checkboxCount >= 1) {
+            filter.classList.remove("hidden");
         }
         else {
-            activeTasks--;
+            filter.classList.add("hidden");
         }
-        li.remove();
-        updateButtons();
+};
+
+function addNote() {
+    document.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    activeNotes++;
+    console.log("activeNotes:", activeNotes);      
+    filters();
+    itemsLeft();
+    clearCompletedBtn()
+
+    let ul = document.querySelector("#todo-list");
+    let li = document.createElement("li");
+    ul.classList.remove("hidden");
+    li.classList.add("active");
+    ul.append(li);
+
+    let checkbox = document.createElement("input");
+    checkbox.setAttribute("type", "checkbox");
+    checkbox.setAttribute("class", "toggle");
+    li.append(checkbox);
+    console.log("input value:", input.value);
+    checkbox.onclick = () => {
+        if (checkbox.checked) {
+            activeNotes--;
+            checkboxCount++;
+            console.log("checkboxCount:", checkboxCount);
+            itemsLeft();
+            li.classList.remove("active");
+            li.classList.add("completed");
+            clearCompletedBtn();
+            li.className = "completed";
+            isChecked = true;
+        }
+        if (!checkbox.checked) {
+            activeNotes++;
+            checkboxCount--;
+            console.log("checkboxCount:", checkboxCount);
+            itemsLeft();
+            li.classList.remove("completed");
+            li.classList.add("active");
+            clearCompletedBtn();
+            li.className = "active";
+            isChecked = false;
+        }
+        filters();
     };
 
+    let label = document.createElement("label");
+    label.textContent = input.value;
+    li.append(label);
+
+    let removeBtn = document.createElement("button");
+    removeBtn.className = "remove-button hidden";
+    removeBtn.textContent = "❌";
+    li.append(removeBtn);
+    removeBtn.onclick = () => {
+        if (checkbox.checked) {
+            checkboxCount--;
+            li.remove();
+            filters();
+            itemsLeft();
+            clearCompletedBtn();
+        }
+        if (!checkbox.checked) {
+            activeNotes--;
+            li.remove();
+            filters();
+            itemsLeft();
+            clearCompletedBtn();
+        } 
+    };  
+    
     li.addEventListener("mouseenter", function (event) {
         event.target.querySelector(".remove-button").classList.remove("hidden");
     });
     li.addEventListener("mouseleave", function (event) {
         event.target.querySelector(".remove-button").classList.add("hidden");
     });
-
-    doneButton.onclick = () => {
-        toggleDone(li, doneButton.checked);
-        updateButtons();
-    };
-
-    setItemViewStatus(li);
-    
-    let ul = document.querySelector("#todo-list");
-    ul.append(li);
-    activeTasks++;
+      
+    document.querySelector("#input").value = "";
+});
 }
 
-function setupTemplate() {
-    template = document.querySelector("#todo-template");
-    template.remove();
-}
-
-function setupToggleAll() {
-    let checkBox = document.querySelector(".toggle-all");
-    checkBox.onclick = () => {
-        toggleAll(checkBox.checked);
-        updateButtons();
-    };
-}
-
-function setupShowAllButton() {
-    let button = document.querySelector("#all");
-    button.onclick = () => {
-        filterView("all");
-    };
-}
-
-function setupShowActiveButton() {
-    let button = document.querySelector("#active");
-    button.onclick = () => {
-        filterView("active");
-    };
-}
-
-function setupCompletedButton() {
-    let button = document.querySelector("#completed");
-    button.onclick = () => {
-        filterView("completed");
-    };
-}
-
-function setupClearCompleted() {
-    let button = document.querySelector("#clear-completed");
-    button.onclick = () => {
-        removeAllCompletedItems();
-        updateButtons();
-        document.querySelector(".toggle-all").checked = false;
-    };
-}
-
-function updateButtons() {
-    let todolist = document.querySelector("#todo-list");
-    let statusField = document.querySelector("#status-field");
-    let removeAllCompletedItemsButton = statusField.querySelector("#clear-completed");
-    let itemsLeft = statusField.querySelector("#active-tasks");
-
-    if (completedTasks > 0) {
-        removeAllCompletedItemsButton.classList.remove("hidden");
+function itemsLeft() { 
+    if (activeNotes === 1) {
+        document.getElementById("active-tasks").innerHTML = activeNotes + " item left";
     }
-    else {
-        removeAllCompletedItemsButton.classList.add("hidden");
-    }
-
-    if (completedTasks === 0 && activeTasks === 0) {
-        statusField.classList.add("hidden");
-        todolist.classList.add("hidden");
-    }
-    else {
-        statusField.classList.remove("hidden");
-        todolist.classList.remove("hidden");
-        itemsLeft.textContent = activeTasks;
+    if (activeNotes >= 2 || activeNotes === 0) {
+        document.getElementById("active-tasks").innerHTML = activeNotes + " items left";
     }
 }
 
-function filterView(newStatus) {
-    filterStatus = newStatus;
-    let liItems = document.querySelector("#todo-list").querySelectorAll("li");
-    for (const li of liItems) {
-        setItemViewStatus(li);
-    }
-
-    let allButton = document.querySelector("#all");
-    let activeButton = document.querySelector("#active");
-    let completedButton = document.querySelector("#completed");
-
-    allButton.classList.remove("active");
-    activeButton.classList.remove("active");
-    completedButton.classList.remove("active");
-
-    switch (newStatus) {
-        case "all":
-            allButton.classList.add("active");
-            break;
-        case "active":
-            activeButton.classList.add("active");
-            break;
-        case "completed":
-            completedButton.classList.add("active");
-            break;
-        default:
-            break;
-    };
-}
-
-function setItemViewStatus(li) {
-    let hidden = "hidden";
-
-    switch (filterStatus) {
-        case "all":
-            li.classList.remove(hidden);
-            break;
-        case "active":
-            if (!li.classList.contains("completed")) {
-                li.classList.remove(hidden);
+function clearCompletedBtn() {
+    const clearCompleted = document.querySelector("#clear-completed");
+    checkClearBtn();
+    clearCompleted.onclick = () => {
+        console.log("onclick clear ;)")
+        checkboxCount = (checkboxCount - checkboxCount);
+        console.log("checkboxCount:", checkboxCount);
+        let items = document.querySelector("#todo-list").querySelectorAll("li");
+        for (let li of items) {
+            let checkbox = li.querySelector(".toggle");
+            if (checkbox.checked) {
+                li.remove();
             }
-            else {
-                li.classList.add(hidden);
-            }
-            break;
-        case "completed":
-            if (li.classList.contains("completed")) {
-                li.classList.remove(hidden);
-            }
-            else {
-                li.classList.add(hidden);
-            }
-            break;
-        default:
-            break;
-    }
-}
-
-function removeAllCompletedItems() {
-    let liItems = document.querySelector("#todo-list").querySelectorAll("li");
-    for (const li of liItems) {
-        let checkBox = li.querySelector(".toggle");
-        if (checkBox.checked) {
-            completedTasks--;
-            li.remove();
         }
+        checkClearBtn();
+        filters();
+    }
+};
+
+function checkClearBtn() {
+    const clearCompleted = document.querySelector("#clear-completed");
+    if (checkboxCount === 0) {
+        clearCompleted.classList.add("hidden");     
+    }
+    if (checkboxCount >= 1) {
+        clearCompleted.classList.remove("hidden");    
     }
 }
 
-function toggleAll(isChecked) {
-    let liItems = document.querySelector("#todo-list").querySelectorAll("li");
+function toggleAll() {
 
-    for (const li of liItems) {
-        let toggle = li.querySelector(".toggle");
-        if (toggle.checked != isChecked) {
-            toggle.checked = isChecked;
-            toggleDone(li, isChecked);
+}
+
+function filterAll() {
+    const allBtn = document.querySelector("#all");
+    allBtn.onclick = () => {
+        console.log("onclick all ;)")
+
+        let items = document.querySelector("#todo-list").querySelectorAll("li");
+        let active = document.querySelector(".active");
+        let completed = document.querySelector(".completed");
+
+        for (let li of items) {
+            let checkbox = li.querySelector(".toggle");
+            if (checkbox.checked) {             
+                completed.className = "completed";
+                active.className = "active";
+            }
+            if (!checkbox.checked) {
+                completed.className = "completed";
+                active.className = "active";
+            }
         }
-    }
+    };
 }
 
-function toggleDone(li, isChecked) {
-    if (isChecked) {
-        li.classList.add("completed");
-        completedTasks++;
-        activeTasks--;
-    }
-    else if (!isChecked) {
-        li.classList.remove("completed");
-        completedTasks--;
-        activeTasks++;
-    }
-    setItemViewStatus(li);
+function filterActive() {
+    const activeBtn = document.querySelector("#active");  
+    activeBtn.onclick = () => {
+        console.log("onclick active ;)")
+
+        let items = document.querySelector("#todo-list").querySelectorAll("li");
+        let completed = document.querySelector(".completed");
+        let active = document.querySelector(".active");
+
+        for (let li of items) {
+            let checkbox = li.querySelector(".toggle");
+            if (checkbox.checked) {
+                active.className = "active";
+                completed.className = "completed hidden";
+            }
+        }
+    };
 }
 
+function filterCompleted() {
+    const completed = document.querySelector("#completed");
+    completed.onclick = () => {
+        console.log("onclick completed ;)")
+
+        let items = document.querySelector("#todo-list").querySelectorAll("li");
+        let active = document.querySelector(".active");
+        let completed = document.querySelector(".completed");
+
+        for (let li of items) {
+            let checkbox = li.querySelector(".toggle");
+            if (checkbox.checked) {
+                active.className = "active hidden";
+                completed.className = "completed";
+            }
+            // if (!checkbox.checked) {
+            //     completed.className = "completed";
+            //     active.className = "active hidden";
+            // }
+        }
+    };
+}
+
+  
