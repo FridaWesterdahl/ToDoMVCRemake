@@ -1,6 +1,5 @@
 let activeNotes = 0;
 let checkboxCount = 0;
-let isChecked = false;
 
 start();
 
@@ -10,6 +9,7 @@ function start() {
     filterAll();
     filterActive();
     filterCompleted();
+    toggleAll();
 }
 
 function filters() {
@@ -49,22 +49,16 @@ function addNote() {
             checkboxCount++;
             console.log("checkboxCount:", checkboxCount);
             itemsLeft();
-            li.classList.remove("active");
-            li.classList.add("completed");
             clearCompletedBtn();
             li.className = "completed";
-            isChecked = true;
         }
         if (!checkbox.checked) {
             activeNotes++;
             checkboxCount--;
             console.log("checkboxCount:", checkboxCount);
             itemsLeft();
-            li.classList.remove("completed");
-            li.classList.add("active");
             clearCompletedBtn();
             li.className = "active";
-            isChecked = false;
         }
         filters();
     };
@@ -130,6 +124,11 @@ function clearCompletedBtn() {
         }
         checkClearBtn();
         filters();
+
+        const toggleAllBtn = document.querySelector(".toggle-all");
+        if (toggleAllBtn.checked) {
+            toggleAllBtn.checked = false;
+        }
     }
 };
 
@@ -144,7 +143,47 @@ function checkClearBtn() {
 }
 
 function toggleAll() {
+    const toggleAllBtn = document.querySelector(".toggle-all");
+    toggleAllBtn.onclick = () => {
+        console.log("onclick toggleAll ;)");
 
+        if (toggleAllBtn.checked) {
+            checkboxCount = 1;
+            console.log("checkboxCount:", checkboxCount);
+            activeNotes = (activeNotes - activeNotes);
+            console.log("activeNotes:", activeNotes);
+            let items = document.querySelector("#todo-list").querySelectorAll("li");
+            for (let li of items) {
+                let checkbox = li.querySelector(".toggle");
+                if (!checkbox.checked) {
+                    li.classList.remove("active");
+                    li.classList.add("completed");
+                    checkbox.checked = true; 
+                }
+            }
+        }
+        else {
+            toggleAllBtn.checked = false;
+        }
+        // if (!toggleAllBtn.checked) {
+        //     console.log("checkboxCount:", checkboxCount);
+        //     console.log("activeNotes:", activeNotes);
+        //     let items = document.querySelector("#todo-list").querySelectorAll("li");
+        //     for (let li of items) {
+        //         let checkbox = li.querySelector(".toggle");
+        //         if (!checkbox.checked) {
+        //             li.classList.remove("completed");
+        //             li.classList.add("active");
+        //             checkbox.checked = true;  
+        //         }
+        //     }
+        // }
+
+        
+
+        itemsLeft();
+        clearCompletedBtn();
+    };
 }
 
 function filterAll() {
@@ -182,10 +221,14 @@ function filterActive() {
         for (let li of items) {
             let checkbox = li.querySelector(".toggle");
             if (checkbox.checked) {
-                active.className = "active";
-                completed.className = "completed hidden";
+                // active.className = "active";
+                // completed.className = "completed hidden";
+            active.classList.remove("hidden");
+            completed.classList.add("hidden");
             }
         }
+       
+
     };
 }
 
