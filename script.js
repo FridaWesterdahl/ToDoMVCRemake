@@ -192,18 +192,13 @@ function filterAll() {
         console.log("onclick all ;)")
 
         let items = document.querySelector("#todo-list").querySelectorAll("li");
-        let active = document.querySelector(".active");
-        let completed = document.querySelector(".completed");
-
         for (let li of items) {
             let checkbox = li.querySelector(".toggle");
             if (checkbox.checked) {             
-                completed.className = "completed";
-                active.className = "active";
+                li.classList.remove("hidden");
             }
             if (!checkbox.checked) {
-                completed.className = "completed";
-                active.className = "active";
+                li.classList.remove("hidden");
             }
         }
     };
@@ -215,20 +210,15 @@ function filterActive() {
         console.log("onclick active ;)")
 
         let items = document.querySelector("#todo-list").querySelectorAll("li");
-        let completed = document.querySelector(".completed");
-        let active = document.querySelector(".active");
-
         for (let li of items) {
             let checkbox = li.querySelector(".toggle");
             if (checkbox.checked) {
-                // active.className = "active";
-                // completed.className = "completed hidden";
-            active.classList.remove("hidden");
-            completed.classList.add("hidden");
+            li.classList.add("hidden");
+            }
+            if (!checkbox.checked) {
+                li.classList.remove("hidden");
             }
         }
-       
-
     };
 }
 
@@ -238,19 +228,14 @@ function filterCompleted() {
         console.log("onclick completed ;)")
 
         let items = document.querySelector("#todo-list").querySelectorAll("li");
-        let active = document.querySelector(".active");
-        let completed = document.querySelector(".completed");
-
         for (let li of items) {
             let checkbox = li.querySelector(".toggle");
             if (checkbox.checked) {
-                active.className = "active hidden";
-                completed.className = "completed";
+            li.classList.remove("hidden");
             }
-            // if (!checkbox.checked) {
-            //     completed.className = "completed";
-            //     active.className = "active hidden";
-            // }
+            if (!checkbox.checked) {
+                li.classList.add("hidden");
+            }
         }
     };
 }
