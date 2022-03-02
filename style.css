@@ -1,6 +1,6 @@
-* {
-    /* outline: 1px solid red; */
-}
+/* * {
+    outline: 1px solid red;
+} */
 body {
     display: grid;
     grid-template-areas: 
@@ -55,7 +55,7 @@ main {
     box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2), 0 25px 50px 0 rgba(0,0,0,0.1);
 }
 
-main #todo-top {
+#todo-top {
     grid-area: search;
     display: grid;
     grid-template-columns: 50px auto;
@@ -65,7 +65,7 @@ main #todo-top {
     box-shadow: inset 0 -2px 1px rgb(0 0 0 / 3%);
 }
 
-main #todo-top .toggle-all {
+#todo-top .toggle-all {
     opacity: 0;
     height: 40px;
     width: 40px;
@@ -74,30 +74,30 @@ main #todo-top .toggle-all {
     cursor: pointer;
 }
 
-main #todo-top label {
+#todo-top label {
     line-height: 1.2;
     grid-row-start: 1;
     grid-column-start: 1;
 }
 
-main #todo-top .toggle-all + label {
+#todo-top .toggle-all + label {
     background-image: url(images/circle.svg);
     background-repeat: no-repeat;
     background-position: center left;
 }
 
-main #todo-top .toggle-all:checked + label {
+#todo-top .toggle-all:checked + label {
     background-image: url(images/circle_tick.svg);
 }
 
-main #todo-top .input-bar {
+#todo-top .input-bar {
     background: rgba(0, 0, 0, 0.003);
     text-shadow: 0 1px 0 rgb(255 255 255 / 50%);
     justify-self: stretch;
     grid-area: searchbar;
 }
 
-main #todo-top .input-bar #input {
+#todo-top .input-bar #input {
     position: relative;
     width: 300px;
     height: 33px;
@@ -108,18 +108,18 @@ main #todo-top .input-bar #input {
     padding: 16px;
 }
 
-main #todo-top .input-bar #input::placeholder {
+#todo-top .input-bar #input::placeholder {
     color: #d9d9d9;
 }
 
-main #todo-list {
+#todo-list {
     grid-area: list;
     list-style: none;
     padding: 0%;
     margin: 0%;
 }
 
-main #todo-list li {
+#todo-list li {
     display: grid;
     grid-template-columns: 50px auto 50px;
     grid-template-areas: 
@@ -129,7 +129,7 @@ main #todo-list li {
 }
 
 
-main #todo-list li .toggle {
+#todo-list li .toggle {
     opacity: 0;
     height: 40px;
     width: 40px;
@@ -137,7 +137,7 @@ main #todo-list li .toggle {
     cursor: pointer;
 }
 
-main #todo-list li .remove-button {
+#todo-list li .remove-button {
     justify-self: center;
     margin: 0;
     padding: 0;
@@ -146,7 +146,7 @@ main #todo-list li .remove-button {
 }
 
 
-main #todo-list li label {
+#todo-list li label {
     word-break: break-all;
     padding: 15px 15px 15px 60px;
     line-height: 1.2;
@@ -154,22 +154,22 @@ main #todo-list li label {
     grid-column: span 3 / -1;
 }
 
-main #todo-list li .toggle + label {
+#todo-list li .toggle + label {
     background-image: url(images/circle.svg);
     background-repeat: no-repeat;
     background-position: center left;
 }
 
-main #todo-list li .toggle:checked + label {
+#todo-list li .toggle:checked + label {
     background-image: url(images/circle_tick.svg);
 }
 
-main #todo-list li.completed label {
+#todo-list li.completed label {
     color: #d9d9d9;
     text-decoration: line-through;
 }
 
-main #status-field {
+#sort {
     grid-area: status;
     display: grid;
     align-items: center;
@@ -178,7 +178,7 @@ main #status-field {
     padding-right: 10px;
 }
 
-main #status-field #filter-button {
+#sort #filter-button {
     display: flex;
     flex-direction: row;
     list-style: none;
@@ -186,28 +186,26 @@ main #status-field #filter-button {
     justify-self: center;
 }
 
-main #status-field #filter-button li {
+#sort #filter-button li {
     padding: 2px;
     display: inline;
-}
-main #status-field #filter-button li button{
     cursor: pointer;
 }
 
-main #status-field #filter-button li button:hover {
+#sort #filter-button li button:hover {
     border: solid rgba(47, 175, 53, 0.1);
 }
 
-main #status-field #filter-button li button.active {
+#sort #filter-button li button:focus {
     border: solid rgba(47, 175, 64, 0.15);
 }
 
-main #status-field #clear-completed {
+#sort #clear-completed {
     justify-self: center;
     align-self: center;
 }
 
-main #status-field #clear-completed:hover {
+#sort #clear-completed:hover {
     text-decoration: underline;
     cursor: pointer;
 }

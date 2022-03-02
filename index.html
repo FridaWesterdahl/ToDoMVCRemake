@@ -24,17 +24,9 @@
             <input id="input" type="text" placeholder="What needs to be done? 🙌" autofocus>
         </form>
     </div>
-        <ul id="todo-list" class="hidden"></ul>
-        <template id="todo-template">
-            <li>
-                <input type="checkbox" class="toggle">
-                <label class="todo-text"></label>
-                <button class="remove-button hidden">❌</button>
-            </li> 
-        </template>
-    </ul>
-    <div id="status-field" class="hidden">
-        <p><span id="active-tasks">0</span> items left</p>
+        <ul id="todo-list" class="hidden"></ul>      
+    <div id="sort" class="hidden">
+        <p id="active-tasks">0 items left</p>
         <ul id="filter-button">
             <li><button type="button" id="all">All</button></li>
             <li><button type="button" id="active">Active</button></li>
@@ -42,12 +34,10 @@
         </ul>
         <button type="button" id="clear-completed" class="hidden">Clear completed</button>
     </div>
-
 </main>    
 
 <footer>
-    <p>
-    Written by <a href="https://github.com/FridaWesterdahl" target="_blank">Frida</a>
+    <p>Written by <a href="https://github.com/FridaWesterdahl" target="_blank">Frida</a>
         & <a href="https://github.com/fredidi" target="_blank">Fredrik</a><br>
     Remake of TodoMVC</p>
     <a href="#"><img src="images/NeverDontGiveUpDev_Logo_white_NDGU.Dev.png"></a>
