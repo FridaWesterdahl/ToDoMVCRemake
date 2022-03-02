@@ -162,25 +162,25 @@ function toggleAll() {
                 }
             }
         }
-        else {
-            toggleAllBtn.checked = false;
+        if (!toggleAllBtn.checked) {
+            checkboxCount = checkboxCount;
+            console.log("checkboxCount:", checkboxCount);
+            activeNotes = activeNotes;
+            console.log("activeNotes:", activeNotes);
+            let items = document.querySelector("#todo-list").querySelectorAll("li");
+            for (let li of items) {
+                let checkbox = li.querySelector(".toggle");
+                if (!checkbox.checked) {
+                    li.classList.add("active");
+                    li.classList.remove("completed");
+                    checkbox.checked = false; 
+                }
+                if (checkbox.checked) {
+                    li.classList.remove("completed");
+                    checkbox.checked = false;
+                }
+            }
         }
-        // if (!toggleAllBtn.checked) {
-        //     console.log("checkboxCount:", checkboxCount);
-        //     console.log("activeNotes:", activeNotes);
-        //     let items = document.querySelector("#todo-list").querySelectorAll("li");
-        //     for (let li of items) {
-        //         let checkbox = li.querySelector(".toggle");
-        //         if (!checkbox.checked) {
-        //             li.classList.remove("completed");
-        //             li.classList.add("active");
-        //             checkbox.checked = true;  
-        //         }
-        //     }
-        // }
-
-        
-
         itemsLeft();
         clearCompletedBtn();
     };
