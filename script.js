@@ -26,8 +26,7 @@ function addNote() {
     document.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    activeNotes++;
-    console.log("activeNotes:", activeNotes);      
+    activeNotes++;   
     filters();
     itemsLeft();
     clearCompletedBtn()
@@ -47,7 +46,6 @@ function addNote() {
         if (checkbox.checked) {
             activeNotes--;
             checkboxCount++;
-            console.log("checkboxCount:", checkboxCount);
             itemsLeft();
             clearCompletedBtn();
             li.className = "completed";
@@ -55,7 +53,6 @@ function addNote() {
         if (!checkbox.checked) {
             activeNotes++;
             checkboxCount--;
-            console.log("checkboxCount:", checkboxCount);
             itemsLeft();
             clearCompletedBtn();
             li.className = "active";
@@ -81,6 +78,7 @@ function addNote() {
         }
         if (!checkbox.checked) {
             activeNotes--;
+            checkboxCount--;
             li.remove();
             filters();
             itemsLeft();
@@ -113,13 +111,13 @@ function clearCompletedBtn() {
     checkClearBtn();
     clearCompleted.onclick = () => {
         console.log("onclick clear ;)")
-        checkboxCount = (checkboxCount - checkboxCount);
-        console.log("checkboxCount:", checkboxCount);
+        
         let items = document.querySelector("#todo-list").querySelectorAll("li");
         for (let li of items) {
             let checkbox = li.querySelector(".toggle");
             if (checkbox.checked) {
                 li.remove();
+                checkboxCount--;
             }
         }
         checkClearBtn();
@@ -134,12 +132,13 @@ function clearCompletedBtn() {
 
 function checkClearBtn() {
     const clearCompleted = document.querySelector("#clear-completed");
-    if (checkboxCount === 0) {
-        clearCompleted.classList.add("hidden");     
-    }
-    if (checkboxCount >= 1) {
-        clearCompleted.classList.remove("hidden");    
-    }
+
+        if (checkboxCount === 0) {
+            clearCompleted.classList.add("hidden");     
+        }
+        if (checkboxCount >= 1) {
+            clearCompleted.classList.remove("hidden");    
+        } 
 }
 
 function toggleAll() {
@@ -147,38 +146,25 @@ function toggleAll() {
     toggleAllBtn.onclick = () => {
         console.log("onclick toggleAll ;)");
 
-        if (toggleAllBtn.checked) {
-            checkboxCount = 1;
-            console.log("checkboxCount:", checkboxCount);
-            activeNotes = (activeNotes - activeNotes);
-            console.log("activeNotes:", activeNotes);
+        if (toggleAllBtn.checked) {  
             let items = document.querySelector("#todo-list").querySelectorAll("li");
             for (let li of items) {
                 let checkbox = li.querySelector(".toggle");
-                if (!checkbox.checked) {
-                    li.classList.remove("active");
-                    li.classList.add("completed");
-                    checkbox.checked = true; 
-                }
+                checkbox.checked = true;
+                li.classList.replace("active", "completed");
+                activeNotes--;
+                checkboxCount++;   
             }
+            console.log("activeNotes = 0", activeNotes)
         }
         if (!toggleAllBtn.checked) {
-            checkboxCount = checkboxCount;
-            console.log("checkboxCount:", checkboxCount);
-            activeNotes = activeNotes;
-            console.log("activeNotes:", activeNotes);
             let items = document.querySelector("#todo-list").querySelectorAll("li");
             for (let li of items) {
                 let checkbox = li.querySelector(".toggle");
-                if (!checkbox.checked) {
-                    li.classList.add("active");
-                    li.classList.remove("completed");
-                    checkbox.checked = false; 
-                }
-                if (checkbox.checked) {
-                    li.classList.remove("completed");
-                    checkbox.checked = false;
-                }
+                checkbox.checked = false;
+                li.classList.replace("completed", "active");
+                activeNotes++;  
+                checkboxCount--;
             }
         }
         itemsLeft();
@@ -239,5 +225,3 @@ function filterCompleted() {
         }
     };
 }
-
-  
