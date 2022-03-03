@@ -56,6 +56,8 @@ function addNote() {
             itemsLeft();
             clearCompletedBtn();
             li.className = "active";
+            const toggleAllBtn = document.querySelector(".toggle-all");
+            toggleAllBtn.checked = false;
         }
         filters();
     };
@@ -147,19 +149,18 @@ function toggleAll() {
         console.log("onclick toggleAll ;)");
 
         if (toggleAllBtn.checked) {  
-            let items = document.querySelector("#todo-list").querySelectorAll("li");
-            for (let li of items) {
+            let active = document.querySelectorAll(".active");
+            for (let li of active) {
                 let checkbox = li.querySelector(".toggle");
                 checkbox.checked = true;
                 li.classList.replace("active", "completed");
                 activeNotes--;
                 checkboxCount++;   
             }
-            console.log("activeNotes = 0", activeNotes)
         }
         if (!toggleAllBtn.checked) {
-            let items = document.querySelector("#todo-list").querySelectorAll("li");
-            for (let li of items) {
+            let completed = document.querySelectorAll(".completed");
+            for (let li of completed) {
                 let checkbox = li.querySelector(".toggle");
                 checkbox.checked = false;
                 li.classList.replace("completed", "active");
