@@ -6,14 +6,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Two (2) .NET Developer students at Teknikhögskolan
     re-making ToDo MVC for School Assignment 2022. Re-Created by Frida Westerdahl and Fredrik Lam.">
-    <title>ToDoMVCRemake</title>
+    <title>todoMVCRemake</title>
     <link rel="icon" type="image/icon" href="images/NeverDontGiveUpDev_Logo_NDGU.Dev_Fav-icon.png">
 
     <script src="script.js" defer></script>
     <link rel="stylesheet" href="style.css">
-    
 </head>
 <body>
-    
+    <header class="header">
+        <h1>todos</h1>
+    </header>
+<main>
+    <div id="todo-top">
+            <input type="checkbox" class="toggle-all">
+            <label></label>
+        <form class="input-bar">
+            <input id="input" type="text" placeholder="What needs to be done? 🙌" autofocus>
+        </form>
+    </div>
+        <ul id="todo-list" class="hidden"></ul>      
+    <div id="sort" class="hidden">
+        <p id="active-tasks">0 items left</p>
+        <ul id="filter-button">
+            <li><button type="button" id="all">All</button></li>
+            <li><button type="button" id="active">Active</button></li>
+            <li><button type="button" id="completed">Completed</button></li>
+        </ul>
+        <button type="button" id="clear-completed" class="hidden">Clear completed</button>
+    </div>
+</main>    
+<footer>
+    <p>Written by <a href="https://github.com/FridaWesterdahl" target="_blank">Frida</a>
+        & <a href="https://github.com/fredidi" target="_blank">Fredrik</a><br>
+    Remake of TodoMVC</p>
+    <a href="#"><img src="images/NeverDontGiveUpDev_Logo_white_NDGU.Dev.png"></a>
+</footer>
 </body>
-</html>
+</html>  

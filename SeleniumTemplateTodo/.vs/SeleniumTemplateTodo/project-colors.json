@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "02aba7ab-af2b-4b73-b9e5-1e43d4de9f26": {
+      "ProjectGuid": "02aba7ab-af2b-4b73-b9e5-1e43d4de9f26",
+      "DisplayName": "SeleniumTemplateTodo",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}
